@@ -144,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBaquetas() {
         left = SKSpriteNode(imageNamed: "baqueta")
         left.setScale(0.4)
-        left.position = CGPoint(x: self.size.width * 0.54, y: self.size.height * 0.41)
+        left.position = CGPoint(x: self.size.width * 0.53, y: self.size.height * 0.45)
         left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 10))
         left.physicsBody?.categoryBitMask = PhysicsCategories.Baque
         left.physicsBody?.collisionBitMask = PhysicsCategories.None
@@ -256,7 +256,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         circle.yScale = 0.00032*size.width
         circle.position = CGPoint(x: self.size.width * 0.23, y: self.size.height * 0.33)
         
-        circle.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: circle.frame.width, height:circle.frame.height/3), center: CGPointMake(0, -40))
+        circle.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: circle.frame.width, height:circle.frame.height/3), center: CGPointMake(60, -40))
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
         circle.physicsBody?.collisionBitMask = PhysicsCategories.None
         circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note | PhysicsCategories.Baque
@@ -282,8 +282,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (firstBody.node?.name == "EmptyNote" || secondBody.node?.name == "EmptyNote") {
             return
-        }
-        if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
+        }else if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
                 noteDidCollideWithCircle(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask == PhysicsCategories.Baque && secondBody.categoryBitMask == PhysicsCategories.Circle){
@@ -307,6 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if (firstBody.node?.name == "EmptyNote" || secondBody.node?.name == "EmptyNote") {
+            selected = false
             return
         }
         if (firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle) {
