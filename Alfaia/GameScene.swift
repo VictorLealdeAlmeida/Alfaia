@@ -15,6 +15,7 @@ struct PhysicsCategories{
     static let Note: UInt32 = 0b1 //1
     static let Circle: UInt32 = 0b10 //4
     static let EmptyNote: UInt32 = 0b11
+    static let Baque: UInt32 = 0b110
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -47,6 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
         self.createCircle()
         self.createBaquetas()
+        self.createAlfaia()
         
        // timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:#selector(selectBump), userInfo: nil, repeats: true)
         runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
@@ -86,13 +88,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func createAlfaia(){
+        let alfaia = SKSpriteNode(imageNamed: "alfaia")
+        alfaia.setScale(0.30)
+        alfaia.position = CGPoint(x: self.size.width * 0.33, y: self.size.height * 0.22)
+      //  alfaia.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: alfaia.frame.width, height: alfaia.frame.height/10), center: CGPointMake(0, 10))
+        alfaia.physicsBody?.categoryBitMask = PhysicsCategories.None
+        alfaia.physicsBody?.contactTestBitMask = PhysicsCategories.None
+        addChild(alfaia)
+    }
+    
     func createBaquetas() {
         left = SKSpriteNode(imageNamed: "baqueta")
-        left.setScale(0.5)
-        left.position = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.5)
+        left.setScale(0.4)
+        left.position = CGPoint(x: self.size.width * 0.55, y: self.size.height * 0.2)
         left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 10))
-        left.physicsBody?.categoryBitMask = PhysicsCategories.None
-        left.physicsBody?.contactTestBitMask = PhysicsCategories.None
+        left.physicsBody?.categoryBitMask = PhysicsCategories.Baque
+        left.physicsBody?.collisionBitMask = PhysicsCategories.None
+        left.physicsBody?.contactTestBitMask = PhysicsCategories.Circle
         left.anchorPoint = CGPoint(x:CGFloat(1),y:CGFloat(0))
         
         addChild(left)
@@ -187,13 +200,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createCircle(){
         let circle = SKSpriteNode(imageNamed: "circ")
-        circle.xScale = 0.00035*size.width
-        circle.yScale = 0.00035*size.width
-        circle.position = CGPoint(x: size.width * 0.5, y: size.height * 0.3)
-        circle.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
+        circle.xScale = 0.00065*size.width
+        circle.yScale = 0.00032*size.width
+        circle.position = CGPoint(x: self.size.width * 0.33, y: self.size.height * 0.33)
+        circle.physicsBody = SKPhysicsBody(circleOfRadius: circle.size.width/2)
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
         circle.physicsBody?.collisionBitMask = PhysicsCategories.None
-        circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note
+        circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note | PhysicsCategories.Baque
+        
+        
+        circle.alpha = 0
         self.addChild(circle)
     }
     
