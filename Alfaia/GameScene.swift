@@ -140,6 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let note = self.notesGenerated.removeFirst()
         if selected{
             //Transiçao
+            note.physicsBody = nil
             note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
@@ -148,6 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName("mudouScore", object: nil, userInfo: ["score": score])
             selected = false
         }else{
+            note.physicsBody = nil
             note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
