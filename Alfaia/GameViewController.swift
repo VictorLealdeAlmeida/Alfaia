@@ -50,9 +50,6 @@ class GameViewController: UIViewController {
         let urlImg: NSURL = NSBundle.mainBundle().URLForResource("nuanda", withExtension: "gif")!
         let data: NSData = NSData(contentsOfURL: urlImg)!
         
-//        let image = UIImage.animatedImageNamed("tutorial_01", duration: NSTimeInterval)
-//        let imageView = UIImageView
-        
         let image = FLAnimatedImage(animatedGIFData: data)
         image.frameCacheSizeMax = 20
         let imageView = FLAnimatedImageView()
@@ -61,10 +58,6 @@ class GameViewController: UIViewController {
         self.view.addSubview(imageView)
         self.view.sendSubviewToBack(imageView)
         
-//        let image = UIImage(named: "bola")
-//        let imageView = UIImageView(image: image)
-//        imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-//        self.view.addSubview(imageView)
     }
     
     func setProgress() {

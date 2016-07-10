@@ -55,19 +55,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.createBaquetas()
         self.createAlfaia()
         
-<<<<<<< HEAD
         NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:#selector(getPattern), userInfo: nil, repeats: false)
-=======
-        shakeView()
-        
-        
-       // timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:#selector(selectBump), userInfo: nil, repeats: true)
->>>>>>> f48a448c5c5aded7b7b027e272ba7d81bec9969d
-        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
+
+       // runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
         
         self.trackManager = TrackManager(level: SongLevel.LevelOne)
         
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bumpUm))
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bump))
         view.addGestureRecognizer(tap)
         
         NSNotificationCenter.defaultCenter().addObserver(
@@ -81,11 +75,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    var powerBump = 0
-    func bumpUm(){
-        powerBump = 1
+    func bump(){
+       // powerBump = 1
+        
+        let actionMove = SKAction.rotateToAngle(0.6, duration: 0.25, shortestUnitArc: true)
+        let actionMoveTwo = SKAction.rotateToAngle(-0.25, duration: 0.25, shortestUnitArc: true)
+        left.runAction((SKAction.sequence([actionMove, actionMoveTwo])))
+        
+        if self.notesGenerated.count <= 0 {
+            return
+        }
+        let note = self.notesGenerated.removeFirst()
+        if note.name == "EmptyNote" {
+            return
+        }
+        if selected{
+            //Transiçao
+            note.physicsBody = nil
+            note.removeAllActions()
+            let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
+            note.runAction(SKAction.sequence([actionMove]))
+            label.text = "Acertou"
+            score = score + 10
+            NSNotificationCenter.defaultCenter().postNotificationName("mudouScore", object: nil, userInfo: ["score": score])
+            selected = false
+        }else{
+            note.physicsBody = nil
+            note.removeAllActions()
+            let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
+            note.runAction(SKAction.sequence([actionMove]))
+            label.text = "Errou"
+        }
+        self.activeNotes -= 1
+        if self.isSequenceOver && self.activeNotes == 0 {
+            //            self.getPattern()
+            self.showGestureRecognition()
+            self.isSequenceOver = false
+        }
     }
     
+    
+    
+/*    var powerBump = 0
     func selectBump(){
         if powerBump == 0{
             let actionMove = SKAction.rotateToAngle(0.25, duration: 0.25, shortestUnitArc: true)
@@ -97,7 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
             powerBump = 0
         }
-    }
+    }*/
     
     func createAlfaia(){
         alfaia = SKSpriteNode(imageNamed: "alfaia")
@@ -120,12 +151,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         left.physicsBody?.contactTestBitMask = PhysicsCategories.Circle
         left.anchorPoint = CGPoint(x:CGFloat(1),y:CGFloat(0))
         
-        addChild(left)s
+        addChild(left)
         
-        //Transiçao
-        let actionMove = SKAction.rotateToAngle(0.7, duration: 0.5, shortestUnitArc: true)
-        let actionMoveTwo = SKAction.rotateToAngle(-0.7, duration: 0.5, shortestUnitArc: true)
-        left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
     }
     
     func shakeView(){
@@ -227,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let circle = SKSpriteNode(imageNamed: "circ")
         circle.xScale = 0.00065*size.width
         circle.yScale = 0.00032*size.width
-        circle.position = CGPoint(x: self.size.width * 0.33, y: self.size.height * 0.33)
+        circle.position = CGPoint(x: self.size.width * 0.23, y: self.size.height * 0.33)
         
         circle.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: circle.frame.width, height:circle.frame.height/3), center: CGPointMake(0, -40))
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
@@ -294,50 +321,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var selected = false
     func noteDidCollideWithCircle(note:SKSpriteNode, circle:SKSpriteNode){
         selected = true
+        print("Ëntrou")
     }
     
     func noteDidCollideWithCircleEnd(note:SKSpriteNode, circle:SKSpriteNode){
         selected = false
+        print("Saiu")
+
         if self.notesGenerated.count <= 0 {
             return
         }
         self.notesGenerated.removeFirst()
         self.activeNotes -= 1
     }
-    
-    func bump(){
-        if self.notesGenerated.count <= 0 {
-            return
-        }
-        let note = self.notesGenerated.removeFirst()
-        if note.name == "EmptyNote" {
-            return
-        }
-        if selected{
-            //Transiçao
-            note.physicsBody = nil
-            note.removeAllActions()
-            let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
-            note.runAction(SKAction.sequence([actionMove]))
-            label.text = "Acertou"
-            score = score + 10
-            NSNotificationCenter.defaultCenter().postNotificationName("mudouScore", object: nil, userInfo: ["score": score])
-            selected = false
-        }else{
-            note.physicsBody = nil
-            note.removeAllActions()
-            let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
-            note.runAction(SKAction.sequence([actionMove]))
-            label.text = "Errou"
-        }
-        self.activeNotes -= 1
-        if self.isSequenceOver && self.activeNotes == 0 {
-//            self.getPattern()
-            self.showGestureRecognition()
-            self.isSequenceOver = false
-        }
-    }
-    
+
 
     override func update(currentTime: CFTimeInterval) {
         
