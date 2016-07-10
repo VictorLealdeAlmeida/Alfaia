@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 Victor Leal Porto de Almeida Arruda. All rights reserved.
 //
 
+import UIKit
 import SpriteKit
 import GameController
 
@@ -27,13 +28,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var notesGenerated: [SKNode] = []
     
+    var trackManager: TrackManager!
+    var notesSequence: [Bool] = []
+    var gesturesSequence: [UISwipeGestureRecognizerDirection] = []
+    
+    var isSequenceOver: Bool = false
+    
     override func didMoveToView(view: SKView) {
-        
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(GameScene.controllerDidConnect(_:)),
-            name: GCControllerDidConnectNotification,
-            object: nil)
         
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVectorMake(0, 0)
@@ -41,16 +42,85 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
        
         createCircle()
-        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(createNote),SKAction.waitForDuration(0.8)])))
+//        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(createNote),SKAction.waitForDuration(0.8)])))
         
-        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(bump))
-        swipeRight.direction = .Right
-        view.addGestureRecognizer(swipeRight)
+        self.trackManager = TrackManager(level: SongLevel.LevelOne)
+        self.getPattern()
+        
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bump))
+        view.addGestureRecognizer(tap)
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(GameScene.controllerDidConnect(_:)),
+            name: GCControllerDidConnectNotification,
+            object: nil)
+        
+        if let controller = GCController.controllers().first {
+            self.startMonitoringMotion(controller)
+        }
 
     }
     
+    func getPattern() {
+        guard let newPattern = trackManager.nextBumpPattern() else {
+            return
+            // CHAMAR FUNÇÃO PRA TERMINAR FASE
+        }
+        self.notesSequence = newPattern["right"]!
+        let action = SKAction.repeatAction(SKAction.sequence([SKAction.runBlock(createNote), SKAction.waitForDuration(0.7)]), count: self.notesSequence.count)
+        runAction(SKAction.sequence([action,SKAction.runBlock(terminou)]))
+    }
+    
+    func showGestureRecognition() {
+        guard let newPattern = trackManager.nextGesturePattern() else {
+            self.getPattern()
+            return
+        }
+        self.gesturesSequence = newPattern
+        self.showNextGesture()
+    }
+    
+    func showNextGesture() {
+        if self.gesturesSequence.count <= 0 {
+            self.getPattern()
+            return
+        }
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.showNextGesture))
+        swipe.direction = self.gesturesSequence.removeFirst()
+        self.view?.addGestureRecognizer(swipe)
+        switch swipe.direction {
+        case UISwipeGestureRecognizerDirection.Up:
+            self.label.text = "CIMA"
+        case UISwipeGestureRecognizerDirection.Down:
+            self.label.text = "BAIXO"
+        case UISwipeGestureRecognizerDirection.Left:
+            self.label.text = "ESQUERDA"
+        case UISwipeGestureRecognizerDirection.Right:
+            self.label.text = "DIREITA"
+        default:
+            self.label.text = "???"
+        }
+    }
+    
+    func recognizeSwipe() {
+        
+    }
+    
+    func terminou() {
+        print("terminou")
+        self.isSequenceOver = true
+    }
+    
     func createNote(){
-        note = SKSpriteNode(imageNamed: "bola")
+        let showNote = self.notesSequence.removeFirst()
+        
+        var spriteName = "bola"
+        if !showNote {
+            spriteName = "bola-cinza"
+            return
+        }
+        note = SKSpriteNode(imageNamed: spriteName)
         note.xScale = 0.00003*size.width
         note.yScale = 0.00003*size.width
         note.position = CGPoint(x: size.width * 0.0, y: size.height * 0.7)
@@ -118,6 +188,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle) {
             noteDidCollideWithCircleEnd(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
+        if self.isSequenceOver {
+//            self.getPattern()
+            self.showGestureRecognition()
+        }
     }
     
     var selected = false
@@ -155,7 +229,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Errou"
         }
-        
+        if self.isSequenceOver {
+//            self.getPattern()
+            self.showGestureRecognition()
+            self.isSequenceOver = false
+        }
     }
     
 
@@ -163,9 +241,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func controllerDidConnect(note : NSNotification) {
+    
+}
+
+// Movement Related Stuff
+extension GameScene {
+    func controllerDidConnect(notification: NSNotification) {
         let controller = GCController.controllers().first
-        controller?.motion?.valueChangedHandler = { (motion : GCMotion) -> () in
+        self.startMonitoringMotion(controller!)
+    }
+    
+    func startMonitoringMotion(controller: GCController) {
+        controller.motion?.valueChangedHandler = { (motion : GCMotion) -> () in
             self.checkBump(xValue: motion.userAcceleration.x, yValue: motion.userAcceleration.y, zValue: motion.userAcceleration.z, zGravity: motion.gravity.z)
             
         }
@@ -184,7 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             self.bump()
             print("BUMP")
-//            print("x: \(xValue)     y: \(yValue)     z: \(zValue)     gravity: \(zGravity)")
+            //            print("x: \(xValue)     y: \(yValue)     z: \(zValue)     gravity: \(zGravity)")
             //            self.displayGestureLabel("Bump")
         } else if xValue < -1 && zValue < -1 {
             //            print("Not")
@@ -195,7 +282,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func checkHandsUp(xValue xValue: Double, yValue: Double, zValue: Double, zGravity: Double) {
         if xValue < -1 && yValue > 1 && yValue < 3 && zValue > 1.0 {
-//            print("x: \(xValue)     y: \(yValue)     z: \(zValue)")
+            //            print("x: \(xValue)     y: \(yValue)     z: \(zValue)")
             //            self.displayGestureLabel("HandsUp")
         }
     }
