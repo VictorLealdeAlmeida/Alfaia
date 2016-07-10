@@ -34,10 +34,13 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             scene.scaleMode = .AspectFill
             skView.presentScene(scene)
-            skView.showsPhysics = true
+            skView.showsPhysics = false
             skView.allowsTransparency = true
             
         }
+        
+        let tapMenu = UITapGestureRecognizer(target: self, action: #selector(GameViewController.terminaCaralho))
+        tapMenu.allowedPressTypes = [UIPressType.Menu.rawValue]
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameViewController.updateScore),name: "mudouScore", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameViewController.endGame), name: "EndGame", object: nil)
@@ -55,6 +58,12 @@ class GameViewController: UIViewController {
         if let vc = segue.destinationViewController as? EndViewController {
             vc.counter = sender as! Int
         }
+    }
+    
+    func terminaCaralho() {
+//        if let points = notification.userInfo!["points"] as? Int {
+            self.performSegueWithIdentifier("endSegue", sender: 50)
+//        }
     }
     
     func endGame(notification: NSNotification) {

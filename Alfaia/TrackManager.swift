@@ -68,6 +68,9 @@ class TrackManager {
         case .Baque1:
             let pattern = [UISwipeGestureRecognizerDirection.Up, UISwipeGestureRecognizerDirection.Right, UISwipeGestureRecognizerDirection.Up]
             return pattern
+        case .Baque2:
+            let pattern = [UISwipeGestureRecognizerDirection.Right, UISwipeGestureRecognizerDirection.Left, UISwipeGestureRecognizerDirection.Down]
+            return pattern
         default:
             let pattern = [UISwipeGestureRecognizerDirection.Down, UISwipeGestureRecognizerDirection.Left, UISwipeGestureRecognizerDirection.Right]
             return pattern

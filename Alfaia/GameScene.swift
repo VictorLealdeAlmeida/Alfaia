@@ -111,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         let note = self.notesGenerated.removeFirst()
         if note.name == "EmptyNote" {
-            return
+//            return
         }
         if selected{
             //Transiçao
@@ -242,14 +242,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createNote(){
         let showNote = self.notesSequence.removeFirst()
         
-        let spriteName = showNote ? "baque" : "vazio"
+        let spriteName = showNote ? "bola" : "bola-cinza"
         if showNote {
 //            spriteName = "bola-cinza"
 //            return
         }
         note = SKSpriteNode(imageNamed: spriteName)
-        note.xScale = 0.0003*size.width
-        note.yScale = 0.0003*size.width
+        note.xScale = 0.00003*size.width
+        note.yScale = 0.00003*size.width
         note.position = CGPoint(x: 0, y: size.height * 0.3)
         note.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
         if showNote {
@@ -305,6 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if (firstBody.node?.name == "EmptyNote" || secondBody.node?.name == "EmptyNote") {
+            selected = false
             return
         }else if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
                 noteDidCollideWithCircle(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
