@@ -16,12 +16,15 @@ struct PhysicsCategories{
     static let Circle: UInt32 = 0b10 //4
     static let EmptyNote: UInt32 = 0b11
     static let Baque: UInt32 = 0b110
+    static let Alfaia: UInt32 = 0b111
+
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var note = SKSpriteNode(imageNamed: "")
     var left = SKSpriteNode()
+    var alfaia = SKSpriteNode()
 
     var timer = NSTimer()
     
@@ -49,6 +52,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.createCircle()
         self.createBaquetas()
         self.createAlfaia()
+        
+        shakeView()
+        
         
        // timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:#selector(selectBump), userInfo: nil, repeats: true)
         runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
@@ -89,19 +95,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createAlfaia(){
-        let alfaia = SKSpriteNode(imageNamed: "alfaia")
+        alfaia = SKSpriteNode(imageNamed: "alfaia")
         alfaia.setScale(0.30)
         alfaia.position = CGPoint(x: self.size.width * 0.33, y: self.size.height * 0.22)
-      //  alfaia.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: alfaia.frame.width, height: alfaia.frame.height/10), center: CGPointMake(0, 10))
-        alfaia.physicsBody?.categoryBitMask = PhysicsCategories.None
-        alfaia.physicsBody?.contactTestBitMask = PhysicsCategories.None
+      //  alfaia.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: alfaia.frame.width, height:alfaia.frame.height/10), center: CGPointMake(0, 10))
+       // alfaia.physicsBody?.categoryBitMask = PhysicsCategories.Alfaia
+       // left.physicsBody?.collisionBitMask = PhysicsCategories.None
+       // alfaia.physicsBody?.contactTestBitMask = PhysicsCategories.Baque
         addChild(alfaia)
     }
     
     func createBaquetas() {
         left = SKSpriteNode(imageNamed: "baqueta")
         left.setScale(0.4)
-        left.position = CGPoint(x: self.size.width * 0.55, y: self.size.height * 0.2)
+        left.position = CGPoint(x: self.size.width * 0.54, y: self.size.height * 0.41)
         left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 10))
         left.physicsBody?.categoryBitMask = PhysicsCategories.Baque
         left.physicsBody?.collisionBitMask = PhysicsCategories.None
@@ -109,8 +116,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         left.anchorPoint = CGPoint(x:CGFloat(1),y:CGFloat(0))
         
         addChild(left)
-        
 
+    }
+    
+    func shakeView(){
+        let actionMove = SKAction.rotateToAngle(0.1, duration: 0.1, shortestUnitArc: true)
+        let actionMoveTwo = SKAction.rotateToAngle(0, duration: 0.1, shortestUnitArc: true)
+        let actionMoveFour = SKAction.rotateToAngle(-0.1, duration: 0.1, shortestUnitArc: true)
+        alfaia.runAction(SKAction.sequence([actionMove, actionMoveTwo, actionMoveFour, actionMoveTwo]))
+
+        
+        
     }
     
     func getPattern() {
@@ -203,7 +219,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         circle.xScale = 0.00065*size.width
         circle.yScale = 0.00032*size.width
         circle.position = CGPoint(x: self.size.width * 0.33, y: self.size.height * 0.33)
-        circle.physicsBody = SKPhysicsBody(circleOfRadius: circle.size.width/2)
+        
+        circle.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: circle.frame.width, height:circle.frame.height/3), center: CGPointMake(0, -40))
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
         circle.physicsBody?.collisionBitMask = PhysicsCategories.None
         circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note | PhysicsCategories.Baque
@@ -233,6 +250,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
                 noteDidCollideWithCircle(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
+        if(firstBody.categoryBitMask == PhysicsCategories.Baque && secondBody.categoryBitMask == PhysicsCategories.Circle){
+            shakeView()
+        }
+        
  
     }
     
