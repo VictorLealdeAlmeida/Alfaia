@@ -14,6 +14,12 @@
 		672E6A721D32567300328E96 /* baqueta.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A701D32567300328E96 /* baqueta.png */; };
 		672E6A731D32567300328E96 /* graveto.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A711D32567300328E96 /* graveto.png */; };
 		672E6A751D325BA000328E96 /* fundo.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A741D325BA000328E96 /* fundo.png */; };
+		67C4052E1D327CF900E695B2 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C4052A1D327CF900E695B2 /* FLAnimatedImage.m */; };
+		67C4052F1D327CF900E695B2 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C4052C1D327CF900E695B2 /* FLAnimatedImageView.m */; };
+		67C405301D327CF900E695B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67C4052D1D327CF900E695B2 /* Info.plist */; };
+		67C405391D327FE000E695B2 /* tutorial_01.gif in Resources */ = {isa = PBXBuildFile; fileRef = 67C405381D327FE000E695B2 /* tutorial_01.gif */; };
+		67C4053C1D32879F00E695B2 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C4053A1D32879F00E695B2 /* UIImage+animatedGIF.m */; };
+		67C4053E1D328C2E00E695B2 /* nuanda.gif in Resources */ = {isa = PBXBuildFile; fileRef = 67C4053D1D328C2E00E695B2 /* nuanda.gif */; };
 		D439F6B81D31B39F000F6722 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6B71D31B39F000F6722 /* AppDelegate.swift */; };
 		D439F6BA1D31B39F000F6722 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D439F6B91D31B39F000F6722 /* GameScene.sks */; };
 		D439F6BC1D31B39F000F6722 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6BB1D31B39F000F6722 /* GameScene.swift */; };
@@ -50,6 +56,16 @@
 		672E6A701D32567300328E96 /* baqueta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baqueta.png; sourceTree = "<group>"; };
 		672E6A711D32567300328E96 /* graveto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graveto.png; sourceTree = "<group>"; };
 		672E6A741D325BA000328E96 /* fundo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fundo.png; sourceTree = "<group>"; };
+		67C405291D327CF900E695B2 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
+		67C4052A1D327CF900E695B2 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
+		67C4052B1D327CF900E695B2 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
+		67C4052C1D327CF900E695B2 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		67C4052D1D327CF900E695B2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67C405371D327DAA00E695B2 /* Alfaia-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Alfaia-Bridging-Header.h"; sourceTree = "<group>"; };
+		67C405381D327FE000E695B2 /* tutorial_01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = tutorial_01.gif; sourceTree = "<group>"; };
+		67C4053A1D32879F00E695B2 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		67C4053B1D32879F00E695B2 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		67C4053D1D328C2E00E695B2 /* nuanda.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nuanda.gif; sourceTree = "<group>"; };
 		D439F6B41D31B39F000F6722 /* Alfaia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alfaia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D439F6B71D31B39F000F6722 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D439F6B91D31B39F000F6722 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -92,6 +108,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67C405281D327CF900E695B2 /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				67C405291D327CF900E695B2 /* FLAnimatedImage.h */,
+				67C4052A1D327CF900E695B2 /* FLAnimatedImage.m */,
+				67C4052B1D327CF900E695B2 /* FLAnimatedImageView.h */,
+				67C4052C1D327CF900E695B2 /* FLAnimatedImageView.m */,
+				67C4052D1D327CF900E695B2 /* Info.plist */,
+			);
+			path = FLAnimatedImage;
+			sourceTree = "<group>";
+		};
 		D439F6AB1D31B39F000F6722 = {
 			isa = PBXGroup;
 			children = (
@@ -115,14 +143,20 @@
 		D439F6B61D31B39F000F6722 /* Alfaia */ = {
 			isa = PBXGroup;
 			children = (
+				67C4053A1D32879F00E695B2 /* UIImage+animatedGIF.m */,
+				67C4053B1D32879F00E695B2 /* UIImage+animatedGIF.h */,
+				67C405281D327CF900E695B2 /* FLAnimatedImage */,
 				D439F6B71D31B39F000F6722 /* AppDelegate.swift */,
 				D439F6B91D31B39F000F6722 /* GameScene.sks */,
+				67C405371D327DAA00E695B2 /* Alfaia-Bridging-Header.h */,
 				D439F6BB1D31B39F000F6722 /* GameScene.swift */,
 				672E6A6C1D3214A100328E96 /* TrackManager.swift */,
 				D439F6BD1D31B39F000F6722 /* GameViewController.swift */,
 				D439F6BF1D31B39F000F6722 /* Game.xcassets */,
 				D43FBDD61D3266130025A12C /* Assets.xcassets */,
 				D439F6C11D31B39F000F6722 /* Main.storyboard */,
+				67C405381D327FE000E695B2 /* tutorial_01.gif */,
+				67C4053D1D328C2E00E695B2 /* nuanda.gif */,
 				672E6A741D325BA000328E96 /* fundo.png */,
 				672E6A701D32567300328E96 /* baqueta.png */,
 				672E6A711D32567300328E96 /* graveto.png */,
@@ -216,11 +250,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0730;
-				ORGANIZATIONNAME = "Victor Leal Porto de Almeida Arruda";
+				ORGANIZATIONNAME = Fade;
 				TargetAttributes = {
 					D439F6B31D31B39F000F6722 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = A975LQD622;
+						DevelopmentTeam = PMU36CU64R;
 					};
 					D439F6CA1D31B3A0000F6722 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -260,12 +294,15 @@
 				672E6A6F1D32252E00328E96 /* bola-cinza.png in Resources */,
 				672E6A721D32567300328E96 /* baqueta.png in Resources */,
 				D439F6C31D31B39F000F6722 /* Main.storyboard in Resources */,
+				67C405391D327FE000E695B2 /* tutorial_01.gif in Resources */,
 				672E6A691D31EBAF00328E96 /* circ.png in Resources */,
 				D43FBDD71D3266130025A12C /* Assets.xcassets in Resources */,
 				D439F6BA1D31B39F000F6722 /* GameScene.sks in Resources */,
 				672E6A731D32567300328E96 /* graveto.png in Resources */,
 				672E6A751D325BA000328E96 /* fundo.png in Resources */,
+				67C405301D327CF900E695B2 /* Info.plist in Resources */,
 				D439F6C01D31B39F000F6722 /* Game.xcassets in Resources */,
+				67C4053E1D328C2E00E695B2 /* nuanda.gif in Resources */,
 				672E6A6B1D31EBB500328E96 /* bola.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,8 +330,11 @@
 			files = (
 				D439F6BC1D31B39F000F6722 /* GameScene.swift in Sources */,
 				672E6A6D1D3214A200328E96 /* TrackManager.swift in Sources */,
+				67C4052E1D327CF900E695B2 /* FLAnimatedImage.m in Sources */,
 				D439F6BE1D31B39F000F6722 /* GameViewController.swift in Sources */,
 				D439F6B81D31B39F000F6722 /* AppDelegate.swift in Sources */,
+				67C4052F1D327CF900E695B2 /* FLAnimatedImageView.m in Sources */,
+				67C4053C1D32879F00E695B2 /* UIImage+animatedGIF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,10 +470,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Alfaia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BEPiD.Alfaia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Alfaia/Alfaia-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -443,10 +486,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Alfaia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BEPiD.Alfaia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Alfaia/Alfaia-Bridging-Header.h";
 			};
 			name = Release;
 		};

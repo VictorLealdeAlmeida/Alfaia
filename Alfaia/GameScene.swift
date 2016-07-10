@@ -82,8 +82,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMove = SKAction.rotateToAngle(0.7, duration: 0.5, shortestUnitArc: true)
         let actionMoveTwo = SKAction.rotateToAngle(-0.7, duration: 0.5, shortestUnitArc: true)
         left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
-        
-
     }
     
     func getPattern() {
