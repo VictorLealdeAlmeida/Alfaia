@@ -46,6 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(bump))
         swipeRight.direction = .Right
         view.addGestureRecognizer(swipeRight)
+
     }
     
     func createNote(){
@@ -144,8 +145,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Acertou"
             score = score + 10
+            NSNotificationCenter.defaultCenter().postNotificationName("mudouScore", object: nil, userInfo: ["score": score])
             selected = false
         }else{
+            note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Errou"
