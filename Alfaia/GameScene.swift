@@ -15,12 +15,16 @@ struct PhysicsCategories{
     static let Note: UInt32 = 0b1 //1
     static let Circle: UInt32 = 0b10 //4
     static let EmptyNote: UInt32 = 0b11
+    static let Baque: UInt32 = 0b110
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var note = SKSpriteNode(imageNamed: "")
+    var left = SKSpriteNode()
 
+    var timer = NSTimer()
+    
     var label = SKLabelNode()
     var score = 0
     
@@ -37,6 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
+        self.runAction(SKAction.playSoundFileNamed("luanda.mp3", waitForCompletion: false))
+        
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVectorMake(0, 0)
         label = childNodeWithName("labelSKS") as! SKLabelNode
@@ -44,12 +50,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
         self.createCircle()
         self.createBaquetas()
-//        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(createNote),SKAction.waitForDuration(0.8)])))
+        self.createAlfaia()
+        
+        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:#selector(getPattern), userInfo: nil, repeats: false)
+        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
         
         self.trackManager = TrackManager(level: SongLevel.LevelOne)
-//        self.getPattern()
         
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bump))
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bumpUm))
         view.addGestureRecognizer(tap)
         
         NSNotificationCenter.defaultCenter().addObserver(
@@ -61,20 +69,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let controller = GCController.controllers().first {
             self.startMonitoringMotion(controller)
         }
-
+    }
+    
+    var powerBump = 0
+    func bumpUm(){
+        powerBump = 1
+    }
+    
+    func selectBump(){
+        if powerBump == 0{
+            let actionMove = SKAction.rotateToAngle(0.25, duration: 0.25, shortestUnitArc: true)
+            let actionMoveTwo = SKAction.rotateToAngle(-0.25, duration: 0.25, shortestUnitArc: true)
+            left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
+        }else if powerBump == 1{
+            let actionMove = SKAction.rotateToAngle(0.6, duration: 0.25, shortestUnitArc: true)
+            let actionMoveTwo = SKAction.rotateToAngle(-0.25, duration: 0.25, shortestUnitArc: true)
+            left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
+            powerBump = 0
+        }
+    }
+    
+    func createAlfaia(){
+        let alfaia = SKSpriteNode(imageNamed: "alfaia")
+        alfaia.setScale(0.30)
+        alfaia.position = CGPoint(x: self.size.width * 0.33, y: self.size.height * 0.22)
+      //  alfaia.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: alfaia.frame.width, height: alfaia.frame.height/10), center: CGPointMake(0, 10))
+        alfaia.physicsBody?.categoryBitMask = PhysicsCategories.None
+        alfaia.physicsBody?.contactTestBitMask = PhysicsCategories.None
+        addChild(alfaia)
     }
     
     func createBaquetas() {
-        let left = SKSpriteNode(imageNamed: "baqueta")
-        left.setScale(0.5)
-        left.position = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.5)
-        left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 0))
-        left.physicsBody?.categoryBitMask = PhysicsCategories.None
-        left.physicsBody?.contactTestBitMask = PhysicsCategories.None
-        //left.centerRect =  CGRect(origin: CGPointMake(-left.frame.height * 20.5, 0),size: CGSize(width: 0,height: 0))
+        left = SKSpriteNode(imageNamed: "baqueta")
+        left.setScale(0.4)
+        left.position = CGPoint(x: self.size.width * 0.55, y: self.size.height * 0.2)
+        left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 10))
+        left.physicsBody?.categoryBitMask = PhysicsCategories.Baque
+        left.physicsBody?.collisionBitMask = PhysicsCategories.None
+        left.physicsBody?.contactTestBitMask = PhysicsCategories.Circle
         left.anchorPoint = CGPoint(x:CGFloat(1),y:CGFloat(0))
-        
-        //left.centerRect = CGRect(x: 30, y: 0, width: 2, height: 2)
         
         addChild(left)
         
@@ -171,13 +204,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createCircle(){
         let circle = SKSpriteNode(imageNamed: "circ")
-        circle.xScale = 0.00035*size.width
-        circle.yScale = 0.00035*size.width
-        circle.position = CGPoint(x: size.width * 0.5, y: size.height * 0.3)
-        circle.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
+        circle.xScale = 0.00065*size.width
+        circle.yScale = 0.00032*size.width
+        circle.position = CGPoint(x: self.size.width * 0.33, y: self.size.height * 0.33)
+        circle.physicsBody = SKPhysicsBody(circleOfRadius: circle.size.width/2)
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
         circle.physicsBody?.collisionBitMask = PhysicsCategories.None
-        circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note
+        circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note | PhysicsCategories.Baque
+        
+        
+        circle.alpha = 0
         self.addChild(circle)
     }
     

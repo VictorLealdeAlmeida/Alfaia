@@ -59,6 +59,7 @@ class GameViewController: UIViewController {
         imageView.animatedImage = image
         imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
         
 //        let image = UIImage(named: "bola")
 //        let imageView = UIImageView(image: image)
