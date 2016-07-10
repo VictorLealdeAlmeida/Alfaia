@@ -16,6 +16,8 @@
 		D439F6C51D31B39F000F6722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D439F6C41D31B39F000F6722 /* Assets.xcassets */; };
 		D439F6D01D31B3A0000F6722 /* AlfaiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6CF1D31B3A0000F6722 /* AlfaiaTests.swift */; };
 		D439F6DB1D31B3A0000F6722 /* AlfaiaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6DA1D31B3A0000F6722 /* AlfaiaUITests.swift */; };
+		D439F6EA1D31C1C0000F6722 /* circ.png in Resources */ = {isa = PBXBuildFile; fileRef = D439F6E81D31C1C0000F6722 /* circ.png */; };
+		D439F6EB1D31C1C0000F6722 /* bola.png in Resources */ = {isa = PBXBuildFile; fileRef = D439F6E91D31C1C0000F6722 /* bola.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		D439F6D61D31B3A0000F6722 /* AlfaiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlfaiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D439F6DA1D31B3A0000F6722 /* AlfaiaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfaiaUITests.swift; sourceTree = "<group>"; };
 		D439F6DC1D31B3A0000F6722 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D439F6E81D31C1C0000F6722 /* circ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = circ.png; path = ../../../../Downloads/circ.png; sourceTree = "<group>"; };
+		D439F6E91D31C1C0000F6722 /* bola.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bola.png; path = ../../../../Downloads/bola.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,8 @@
 				D439F6C11D31B39F000F6722 /* Main.storyboard */,
 				D439F6C41D31B39F000F6722 /* Assets.xcassets */,
 				D439F6C61D31B39F000F6722 /* Info.plist */,
+				D439F6E81D31C1C0000F6722 /* circ.png */,
+				D439F6E91D31C1C0000F6722 /* bola.png */,
 			);
 			path = Alfaia;
 			sourceTree = "<group>";
@@ -236,9 +242,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D439F6C31D31B39F000F6722 /* Main.storyboard in Resources */,
+				D439F6EA1D31C1C0000F6722 /* circ.png in Resources */,
 				D439F6BA1D31B39F000F6722 /* GameScene.sks in Resources */,
 				D439F6C51D31B39F000F6722 /* Assets.xcassets in Resources */,
 				D439F6C01D31B39F000F6722 /* Game.xcassets in Resources */,
+				D439F6EB1D31C1C0000F6722 /* bola.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
