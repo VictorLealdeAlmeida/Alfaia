@@ -24,6 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var note = SKSpriteNode(imageNamed: "")
     var left = SKSpriteNode()
+    var galho = SKSpriteNode()
     var alfaia = SKSpriteNode()
 
     var timer = NSTimer()
@@ -49,11 +50,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVectorMake(0, 0)
         label = childNodeWithName("labelSKS") as! SKLabelNode
-        label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
+        label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.6)
        
         self.createCircle()
         self.createBaquetas()
         self.createAlfaia()
+        createBaquetasAux()
         
         NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:#selector(getPattern), userInfo: nil, repeats: false)
         
@@ -73,12 +75,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    
+    func createBaquetasAux() {
+        galho = SKSpriteNode(imageNamed: "graveto")
+        galho.setScale(0.3)
+       // galho.zRotation = CGFloat(M_PI)
+        galho.position = CGPoint(x: self.size.width * -0.12, y: self.size.height * 0.35)
+        galho.anchorPoint = CGPoint(x:CGFloat(-0.7),y:CGFloat(0))
+        
+        addChild(galho)
+        
+    }
+    
+    func bump2(){
+        let actionMove2 = SKAction.rotateToAngle(-0.4, duration: 0.25, shortestUnitArc: true)
+        let actionMoveTwo2 = SKAction.rotateToAngle(0.25, duration: 0.25, shortestUnitArc: true)
+        galho.runAction((SKAction.sequence([actionMove2, actionMoveTwo2])))
+    }
+    
     func bump(){
        // powerBump = 1
         
         let actionMove = SKAction.rotateToAngle(0.6, duration: 0.25, shortestUnitArc: true)
         let actionMoveTwo = SKAction.rotateToAngle(-0.25, duration: 0.25, shortestUnitArc: true)
         left.runAction((SKAction.sequence([actionMove, actionMoveTwo])))
+        
+        NSTimer.scheduledTimerWithTimeInterval(0.7, target: self, selector:#selector(bump2), userInfo: nil, repeats: false)
         
         if self.notesGenerated.count <= 0 {
             return
@@ -93,7 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
-            label.text = "Acertou"
+            label.text = "Arretado!"
             score = score + 10
             NSNotificationCenter.defaultCenter().postNotificationName("mudouScore", object: nil, userInfo: ["score": score])
             selected = false
@@ -102,7 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
-            label.text = "Errou"
+            label.text = "Vish!"
         }
         self.activeNotes -= 1
         if self.isSequenceOver && self.activeNotes == 0 {
@@ -224,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         note = SKSpriteNode(imageNamed: spriteName)
         note.xScale = 0.00003*size.width
         note.yScale = 0.00003*size.width
-        note.position = CGPoint(x: size.width * 0.0, y: size.height * 0.3)
+        note.position = CGPoint(x: size.width + note.size.height, y: size.height * 0.3)
         note.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
         if showNote {
             note.physicsBody?.categoryBitMask = PhysicsCategories.Note
@@ -239,7 +261,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.text = ""
         
         //Transiçao
-        let actionMove = SKAction.moveToX(size.width + note.size.width, duration: 3)
+        let actionMove = SKAction.moveToX(0, duration: 3)
         let actionMoveDone = SKAction.removeFromParent()
         note.runAction(SKAction.sequence([actionMove, actionMoveDone]))
         
