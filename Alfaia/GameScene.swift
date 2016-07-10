@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameController
 
 struct PhysicsCategories{
     static let None: UInt32 = 0
@@ -21,9 +22,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var label = SKLabelNode()
     var score = 0
-
+    
+    var lastTimeDetected: NSDate?
     
     override func didMoveToView(view: SKView) {
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(GameScene.controllerDidConnect(_:)),
+            name: GCControllerDidConnectNotification,
+            object: nil)
         
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVectorMake(0, 0)
@@ -54,7 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMove = SKAction.moveToX(size.width + note.size.width, duration: 3)
         let actionMoveDone = SKAction.removeFromParent()
         note.runAction(SKAction.sequence([actionMove, actionMoveDone]))
-        print(score)
+//        print(score)
         
         addChild(note)
     }
@@ -141,4 +149,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
         
     }
+    
+    func controllerDidConnect(note : NSNotification) {
+        let controller = GCController.controllers().first
+        controller?.motion?.valueChangedHandler = { (motion : GCMotion) -> () in
+            self.checkBump(xValue: motion.userAcceleration.x, yValue: motion.userAcceleration.y, zValue: motion.userAcceleration.z, zGravity: motion.gravity.z)
+            
+        }
+    }
+    
+    func checkBump(xValue xValue: Double, yValue: Double, zValue: Double, zGravity: Double) {
+        if xValue < -1.5 && zValue < -1.5 {
+            let currentTime = NSDate()
+            if self.lastTimeDetected == nil {
+                self.lastTimeDetected = currentTime
+            } else if currentTime.timeIntervalSinceDate(self.lastTimeDetected!) < 0.3 {
+                return
+            }
+            self.lastTimeDetected = currentTime
+            print("Entrou")
+            
+            self.batida()
+            print("BUMP")
+//            print("x: \(xValue)     y: \(yValue)     z: \(zValue)     gravity: \(zGravity)")
+            //            self.displayGestureLabel("Bump")
+        } else if xValue < -1 && zValue < -1 {
+            //            print("Not")
+            //            print("x: \(xValue)     y: \(yValue)     z: \(zValue)     gravity: \(zGravity)")
+        }
+        //            print("x: \(xValue)     z: \(zValue)")
+    }
+    
+    func checkHandsUp(xValue xValue: Double, yValue: Double, zValue: Double, zGravity: Double) {
+        if xValue < -1 && yValue > 1 && yValue < 3 && zValue > 1.0 {
+//            print("x: \(xValue)     y: \(yValue)     z: \(zValue)")
+            //            self.displayGestureLabel("HandsUp")
+        }
+    }
+    
+    //    func displayGestureLabel(gestureName: String) {
+    //        self.gestureLbl.text = gestureName
+    //        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
+    //        dispatch_after(delayTime, dispatch_get_main_queue()) {
+    //            self.gestureLbl.text = "Nenhum gesto"
+    //        }
+    //    }
 }
