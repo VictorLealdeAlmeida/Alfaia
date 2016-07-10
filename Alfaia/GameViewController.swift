@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
          // self.progView.transform = CGAffineTransformMakeRotation((CGFloat(M_PI/2)))
         
         self.progView.setProgress(10, animated: true)
-        self.displayVideo()
+    //    self.displayVideo()
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector:#selector(GameViewController.setProgress), userInfo: nil, repeats: true)
     

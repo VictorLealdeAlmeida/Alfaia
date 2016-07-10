@@ -24,6 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var note = SKSpriteNode(imageNamed: "")
     var left = SKSpriteNode()
+    var galho = SKSpriteNode()
     var alfaia = SKSpriteNode()
 
     var timer = NSTimer()
@@ -49,11 +50,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVectorMake(0, 0)
         label = childNodeWithName("labelSKS") as! SKLabelNode
-        label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
+        label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.6)
+     //   let actionMove = SKAction.fadeAlphaTo(0, duration: 0.2)
+     //   label.runAction(SKAction.sequence([actionMove]))
+
+        
        
         self.createCircle()
         self.createBaquetas()
         self.createAlfaia()
+        createBaquetasAux()
         
         NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:#selector(getPattern), userInfo: nil, repeats: false)
         
@@ -73,12 +79,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    
+    func createBaquetasAux() {
+        galho = SKSpriteNode(imageNamed: "graveto")
+        galho.setScale(0.3)
+       // galho.zRotation = CGFloat(M_PI)
+        galho.position = CGPoint(x: self.size.width * -0.12, y: self.size.height * 0.35)
+        galho.anchorPoint = CGPoint(x:CGFloat(-0.7),y:CGFloat(0))
+        
+        addChild(galho)
+        
+    }
+    
+    func bump2(){
+        let actionMove2 = SKAction.rotateToAngle(-0.4, duration: 0.25, shortestUnitArc: true)
+        let actionMoveTwo2 = SKAction.rotateToAngle(0.25, duration: 0.25, shortestUnitArc: true)
+        galho.runAction((SKAction.sequence([actionMove2, actionMoveTwo2])))
+    }
+    
     func bump(){
        // powerBump = 1
         
         let actionMove = SKAction.rotateToAngle(0.6, duration: 0.25, shortestUnitArc: true)
         let actionMoveTwo = SKAction.rotateToAngle(-0.25, duration: 0.25, shortestUnitArc: true)
         left.runAction((SKAction.sequence([actionMove, actionMoveTwo])))
+        
+        NSTimer.scheduledTimerWithTimeInterval(0.7, target: self, selector:#selector(bump2), userInfo: nil, repeats: false)
         
         if self.notesGenerated.count <= 0 {
             return
@@ -93,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
-            label.text = "Acertou"
+            label.text = "Arretado!"
             score = score + 10
             NSNotificationCenter.defaultCenter().postNotificationName("mudouScore", object: nil, userInfo: ["score": score])
             selected = false
@@ -102,7 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
-            label.text = "Errou"
+            label.text = "Vish!"
         }
         self.activeNotes -= 1
         if self.isSequenceOver && self.activeNotes == 0 {
@@ -142,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBaquetas() {
         left = SKSpriteNode(imageNamed: "baqueta")
         left.setScale(0.4)
-        left.position = CGPoint(x: self.size.width * 0.54, y: self.size.height * 0.41)
+        left.position = CGPoint(x: self.size.width * 0.53, y: self.size.height * 0.45)
         left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 10))
         left.physicsBody?.categoryBitMask = PhysicsCategories.Baque
         left.physicsBody?.collisionBitMask = PhysicsCategories.None
@@ -169,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName("EndGame", object: nil)
         }
         self.notesSequence = newPattern["right"]!
-        let action = SKAction.repeatAction(SKAction.sequence([SKAction.runBlock(createNote), SKAction.waitForDuration(0.7)]), count: self.notesSequence.count)
+        let action = SKAction.repeatAction(SKAction.sequence([SKAction.runBlock(createNote), SKAction.waitForDuration(0.9)]), count: self.notesSequence.count)
         runAction(SKAction.sequence([action,SKAction.runBlock(terminou)]))
     }
     
@@ -224,7 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         note = SKSpriteNode(imageNamed: spriteName)
         note.xScale = 0.00003*size.width
         note.yScale = 0.00003*size.width
-        note.position = CGPoint(x: size.width * 0.0, y: size.height * 0.3)
+        note.position = CGPoint(x: size.width + note.size.height, y: size.height * 0.3)
         note.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
         if showNote {
             note.physicsBody?.categoryBitMask = PhysicsCategories.Note
@@ -239,7 +265,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.text = ""
         
         //Transiçao
-        let actionMove = SKAction.moveToX(size.width + note.size.width, duration: 3)
+        let actionMove = SKAction.moveToX(0, duration: 3)
         let actionMoveDone = SKAction.removeFromParent()
         note.runAction(SKAction.sequence([actionMove, actionMoveDone]))
         
@@ -254,7 +280,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         circle.yScale = 0.00032*size.width
         circle.position = CGPoint(x: self.size.width * 0.23, y: self.size.height * 0.33)
         
-        circle.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: circle.frame.width, height:circle.frame.height/3), center: CGPointMake(0, -40))
+        circle.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: circle.frame.width, height:circle.frame.height/3), center: CGPointMake(60, -40))
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
         circle.physicsBody?.collisionBitMask = PhysicsCategories.None
         circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note | PhysicsCategories.Baque
@@ -280,8 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (firstBody.node?.name == "EmptyNote" || secondBody.node?.name == "EmptyNote") {
             return
-        }
-        if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
+        }else if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
                 noteDidCollideWithCircle(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask == PhysicsCategories.Baque && secondBody.categoryBitMask == PhysicsCategories.Circle){
@@ -305,6 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if (firstBody.node?.name == "EmptyNote" || secondBody.node?.name == "EmptyNote") {
+            selected = false
             return
         }
         if (firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle) {
