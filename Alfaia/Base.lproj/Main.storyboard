@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="skI-HJ-Dj3">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="skI-HJ-Dj3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="OriginalOlindaStyle.ttf">
+            <string>OriginalOlindaStyle</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="D66-yY-CTd">
@@ -32,14 +37,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PN4-vH-KDO">
-                                <rect key="frame" x="1167" y="293" width="195" height="86"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fundo.png" translatesAutoresizingMaskIntoConstraints="NO" id="1US-Hs-yNH">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="alfaia" translatesAutoresizingMaskIntoConstraints="NO" id="hLa-oz-tNj">
+                                <rect key="frame" x="611" y="558" width="699" height="608"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PN4-vH-KDO">
+                                <rect key="frame" x="766" y="558" width="388" height="186"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" backgroundImage="play.png"/>
                                 <connections>
                                     <segue destination="499-42-d0g" kind="show" id="cWZ-OK-Bp5"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Luanda" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4vL-10-mFq">
+                                <rect key="frame" x="378" y="111" width="1164" height="300"/>
+                                <fontDescription key="fontDescription" name="OriginalOlindaStyle" family="Original Olinda Style" pointSize="300"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="baqueta-big.png" translatesAutoresizingMaskIntoConstraints="NO" id="CwF-Vy-8N9">
+                                <rect key="frame" x="1328" y="453" width="444" height="387"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="graveto-big.png" translatesAutoresizingMaskIntoConstraints="NO" id="VjO-7l-QaF">
+                                <rect key="frame" x="124" y="457" width="444" height="387"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" id="2lA-Rj-px1"/>
@@ -67,7 +90,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xgI-Xb-mJS">
-                                <rect key="frame" x="139" y="200" width="837" height="10"/>
+                                <rect key="frame" x="116" y="82" width="1688" height="10"/>
                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                             </progressView>
                         </subviews>
@@ -82,4 +105,11 @@
             <point key="canvasLocation" x="651" y="554"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="alfaia" width="879" height="927"/>
+        <image name="baqueta-big.png" width="2977" height="2676"/>
+        <image name="fundo.png" width="2580" height="1800"/>
+        <image name="graveto-big.png" width="897" height="800"/>
+        <image name="play.png" width="600" height="290"/>
+    </resources>
 </document>

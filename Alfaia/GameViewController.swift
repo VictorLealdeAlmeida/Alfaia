@@ -32,7 +32,7 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             skView.presentScene(scene)
             skView.showsPhysics = true
-
+            
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(GameViewController.updateScore),name: "mudouScore", object: nil)
@@ -40,9 +40,31 @@ class GameViewController: UIViewController {
          // self.progView.transform = CGAffineTransformMakeRotation((CGFloat(M_PI/2)))
         
         self.progView.setProgress(10, animated: true)
+        self.displayVideo()
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector:#selector(GameViewController.setProgress), userInfo: nil, repeats: true)
     
+    }
+    
+    func displayVideo() {
+        let urlImg: NSURL = NSBundle.mainBundle().URLForResource("nuanda", withExtension: "gif")!
+        let data: NSData = NSData(contentsOfURL: urlImg)!
+        
+//        let image = UIImage.animatedImageNamed("tutorial_01", duration: NSTimeInterval)
+//        let imageView = UIImageView
+        
+        let image = FLAnimatedImage(animatedGIFData: data)
+        image.frameCacheSizeMax = 20
+        let imageView = FLAnimatedImageView()
+        imageView.animatedImage = image
+        imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        self.view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
+        
+//        let image = UIImage(named: "bola")
+//        let imageView = UIImageView(image: image)
+//        imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+//        self.view.addSubview(imageView)
     }
     
     func setProgress() {

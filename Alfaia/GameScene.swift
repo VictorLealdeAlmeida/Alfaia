@@ -44,6 +44,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
+        self.runAction(SKAction.playSoundFileNamed("luanda.mp3", waitForCompletion: false))
+        
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVectorMake(0, 0)
         label = childNodeWithName("labelSKS") as! SKLabelNode
@@ -53,10 +55,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.createBaquetas()
         self.createAlfaia()
         
+<<<<<<< HEAD
+        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:#selector(getPattern), userInfo: nil, repeats: false)
+=======
         shakeView()
         
         
        // timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:#selector(selectBump), userInfo: nil, repeats: true)
+>>>>>>> f48a448c5c5aded7b7b027e272ba7d81bec9969d
         runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
         
         self.trackManager = TrackManager(level: SongLevel.LevelOne)
@@ -73,7 +79,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let controller = GCController.controllers().first {
             self.startMonitoringMotion(controller)
         }
-
     }
     
     var powerBump = 0
@@ -115,8 +120,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         left.physicsBody?.contactTestBitMask = PhysicsCategories.Circle
         left.anchorPoint = CGPoint(x:CGFloat(1),y:CGFloat(0))
         
-        addChild(left)
-
+        addChild(left)s
+        
+        //Transiçao
+        let actionMove = SKAction.rotateToAngle(0.7, duration: 0.5, shortestUnitArc: true)
+        let actionMoveTwo = SKAction.rotateToAngle(-0.7, duration: 0.5, shortestUnitArc: true)
+        left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
     }
     
     func shakeView(){
