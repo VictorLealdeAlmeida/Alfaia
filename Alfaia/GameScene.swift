@@ -14,7 +14,7 @@ struct PhysicsCategories{
     static let None: UInt32 = 0
     static let Note: UInt32 = 0b1 //1
     static let Circle: UInt32 = 0b10 //4
-    static let xx: UInt32 = 0b11
+    static let EmptyNote: UInt32 = 0b11
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -33,6 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gesturesSequence: [UISwipeGestureRecognizerDirection] = []
     
     var isSequenceOver: Bool = false
+    var activeNotes: Int = 0
     
     override func didMoveToView(view: SKView) {
         
@@ -115,19 +116,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createNote(){
         let showNote = self.notesSequence.removeFirst()
         
-        var spriteName = "bola"
-        if !showNote {
-            spriteName = "bola-cinza"
-            return
+        let spriteName = showNote ? "bola" : "bola-cinza"
+        if showNote {
+//            spriteName = "bola-cinza"
+//            return
         }
         note = SKSpriteNode(imageNamed: spriteName)
         note.xScale = 0.00003*size.width
         note.yScale = 0.00003*size.width
         note.position = CGPoint(x: size.width * 0.0, y: size.height * 0.3)
         note.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
-        note.physicsBody?.categoryBitMask = PhysicsCategories.Note
+        if showNote {
+            note.physicsBody?.categoryBitMask = PhysicsCategories.Note
+            note.physicsBody?.contactTestBitMask = PhysicsCategories.Circle
+        } else {
+            note.physicsBody?.categoryBitMask = PhysicsCategories.EmptyNote
+            note.physicsBody?.contactTestBitMask = PhysicsCategories.None
+            note.name = "EmptyNote"
+        }
+        
         note.physicsBody?.collisionBitMask = PhysicsCategories.None
-        note.physicsBody?.contactTestBitMask = PhysicsCategories.Circle
         label.text = ""
         
         //Transiçao
@@ -138,6 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(note)
         self.notesGenerated.append(note)
+        self.activeNotes += 1
     }
     
     func createCircle(){
@@ -166,6 +175,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyA;
         }
         
+        if (firstBody.node?.name == "EmptyNote" || secondBody.node?.name == "EmptyNote") {
+            return
+        }
         if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
                 noteDidCollideWithCircle(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
@@ -185,10 +197,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyA;
         }
         
+        if (firstBody.node?.name == "EmptyNote" || secondBody.node?.name == "EmptyNote") {
+            return
+        }
         if (firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle) {
             noteDidCollideWithCircleEnd(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
-        if self.isSequenceOver {
+        if self.isSequenceOver && self.activeNotes == 0 {
 //            self.getPattern()
             self.showGestureRecognition()
         }
@@ -205,6 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         self.notesGenerated.removeFirst()
+        self.activeNotes -= 1
     }
     
     func bump(){
@@ -212,6 +228,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         let note = self.notesGenerated.removeFirst()
+        if note.name == "EmptyNote" {
+            return
+        }
         if selected{
             //Transiçao
             note.physicsBody = nil
@@ -229,7 +248,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Errou"
         }
-        if self.isSequenceOver {
+        self.activeNotes -= 1
+        if self.isSequenceOver && self.activeNotes == 0 {
 //            self.getPattern()
             self.showGestureRecognition()
             self.isSequenceOver = false
