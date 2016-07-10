@@ -68,7 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let left = SKSpriteNode(imageNamed: "baqueta")
         left.setScale(0.5)
         left.position = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.5)
-        left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.9, -17))
+        left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 0))
         left.physicsBody?.categoryBitMask = PhysicsCategories.None
         left.physicsBody?.contactTestBitMask = PhysicsCategories.None
         //left.centerRect =  CGRect(origin: CGPointMake(-left.frame.height * 20.5, 0),size: CGSize(width: 0,height: 0))
@@ -79,8 +79,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(left)
         
         //Transiçao
-        let actionMove = SKAction.rotateToAngle(1, duration: 0.5, shortestUnitArc: true)
-        let actionMoveTwo = SKAction.rotateToAngle(-1, duration: 0.5, shortestUnitArc: true)
+        let actionMove = SKAction.rotateToAngle(0.7, duration: 0.5, shortestUnitArc: true)
+        let actionMoveTwo = SKAction.rotateToAngle(-0.7, duration: 0.5, shortestUnitArc: true)
         left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
         
 
