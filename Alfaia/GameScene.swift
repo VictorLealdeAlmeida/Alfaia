@@ -56,13 +56,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.createAlfaia()
         
         NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:#selector(getPattern), userInfo: nil, repeats: false)
-
-       // runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
         
         self.trackManager = TrackManager(level: SongLevel.LevelOne)
         
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bump))
-        view.addGestureRecognizer(tap)
+//        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bump))
+//        self.addGestureRecognizer(tap)
         
         NSNotificationCenter.defaultCenter().addObserver(
             self,

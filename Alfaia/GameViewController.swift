@@ -11,6 +11,7 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet var skView: SKView!
     @IBOutlet weak var labelStore: UILabel!
     @IBOutlet weak var progView: UIProgressView!
     var timeScore = NSTimer()
@@ -25,13 +26,14 @@ class GameViewController: UIViewController {
         
         if let scene = GameScene(fileNamed: "GameScene") {
        
-            let skView = self.view as! SKView
+//            let skView = self.view as! SKView
             skView.showsFPS = true
             skView.showsNodeCount = true
             skView.ignoresSiblingOrder = true
             scene.scaleMode = .AspectFill
             skView.presentScene(scene)
             skView.showsPhysics = true
+            skView.allowsTransparency = true
             
         }
         
@@ -50,13 +52,18 @@ class GameViewController: UIViewController {
         let urlImg: NSURL = NSBundle.mainBundle().URLForResource("nuanda", withExtension: "gif")!
         let data: NSData = NSData(contentsOfURL: urlImg)!
         
-        let image = FLAnimatedImage(animatedGIFData: data)
-        image.frameCacheSizeMax = 20
-        let imageView = FLAnimatedImageView()
-        imageView.animatedImage = image
-        imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        self.view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
+//        let texture = SKTexture(data: data, size: self.frame.size)
+//        let background = SKSpriteNode(texture: texture)
+//        background.zPosition = -1000
+//        self.addChild(background)
+        
+                let image = FLAnimatedImage(animatedGIFData: data)
+                image.frameCacheSizeMax = 20
+                let imageView = FLAnimatedImageView()
+                imageView.animatedImage = image
+                imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+                self.view.addSubview(imageView)
+                self.view.sendSubviewToBack(imageView)
         
     }
     
