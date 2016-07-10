@@ -33,6 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gesturesSequence: [UISwipeGestureRecognizerDirection] = []
     
     var isSequenceOver: Bool = false
+    var activeNotes: Int = 0
     
     override func didMoveToView(view: SKView) {
         
@@ -138,6 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(note)
         self.notesGenerated.append(note)
+        self.activeNotes += 1
     }
     
     func createCircle(){
@@ -188,7 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle) {
             noteDidCollideWithCircleEnd(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
-        if self.isSequenceOver {
+        if self.isSequenceOver && self.activeNotes == 0 {
 //            self.getPattern()
             self.showGestureRecognition()
         }
@@ -205,6 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         self.notesGenerated.removeFirst()
+        self.activeNotes -= 1
     }
     
     func bump(){
@@ -229,7 +232,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Errou"
         }
-        if self.isSequenceOver {
+        self.activeNotes -= 1
+        if self.isSequenceOver && self.activeNotes == 0 {
 //            self.getPattern()
             self.showGestureRecognition()
             self.isSequenceOver = false
