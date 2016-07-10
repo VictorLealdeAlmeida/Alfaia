@@ -11,6 +11,9 @@
 		672E6A6B1D31EBB500328E96 /* bola.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A6A1D31EBB500328E96 /* bola.png */; };
 		672E6A6D1D3214A200328E96 /* TrackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672E6A6C1D3214A100328E96 /* TrackManager.swift */; };
 		672E6A6F1D32252E00328E96 /* bola-cinza.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A6E1D32252E00328E96 /* bola-cinza.png */; };
+		672E6A721D32567300328E96 /* baqueta.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A701D32567300328E96 /* baqueta.png */; };
+		672E6A731D32567300328E96 /* graveto.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A711D32567300328E96 /* graveto.png */; };
+		672E6A751D325BA000328E96 /* fundo.png in Resources */ = {isa = PBXBuildFile; fileRef = 672E6A741D325BA000328E96 /* fundo.png */; };
 		D439F6B81D31B39F000F6722 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6B71D31B39F000F6722 /* AppDelegate.swift */; };
 		D439F6BA1D31B39F000F6722 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D439F6B91D31B39F000F6722 /* GameScene.sks */; };
 		D439F6BC1D31B39F000F6722 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6BB1D31B39F000F6722 /* GameScene.swift */; };
@@ -44,6 +47,9 @@
 		672E6A6A1D31EBB500328E96 /* bola.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bola.png; sourceTree = "<group>"; };
 		672E6A6C1D3214A100328E96 /* TrackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackManager.swift; sourceTree = "<group>"; };
 		672E6A6E1D32252E00328E96 /* bola-cinza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bola-cinza.png"; sourceTree = "<group>"; };
+		672E6A701D32567300328E96 /* baqueta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baqueta.png; sourceTree = "<group>"; };
+		672E6A711D32567300328E96 /* graveto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graveto.png; sourceTree = "<group>"; };
+		672E6A741D325BA000328E96 /* fundo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fundo.png; sourceTree = "<group>"; };
 		D439F6B41D31B39F000F6722 /* Alfaia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alfaia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D439F6B71D31B39F000F6722 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D439F6B91D31B39F000F6722 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -117,6 +123,9 @@
 				D439F6BF1D31B39F000F6722 /* Game.xcassets */,
 				D439F6C11D31B39F000F6722 /* Main.storyboard */,
 				D439F6C41D31B39F000F6722 /* Assets.xcassets */,
+				672E6A741D325BA000328E96 /* fundo.png */,
+				672E6A701D32567300328E96 /* baqueta.png */,
+				672E6A711D32567300328E96 /* graveto.png */,
 				672E6A681D31EBAF00328E96 /* circ.png */,
 				672E6A6A1D31EBB500328E96 /* bola.png */,
 				672E6A6E1D32252E00328E96 /* bola-cinza.png */,
@@ -248,10 +257,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				672E6A6F1D32252E00328E96 /* bola-cinza.png in Resources */,
+				672E6A721D32567300328E96 /* baqueta.png in Resources */,
 				D439F6C31D31B39F000F6722 /* Main.storyboard in Resources */,
 				672E6A691D31EBAF00328E96 /* circ.png in Resources */,
 				D439F6BA1D31B39F000F6722 /* GameScene.sks in Resources */,
 				D439F6C51D31B39F000F6722 /* Assets.xcassets in Resources */,
+				672E6A731D32567300328E96 /* graveto.png in Resources */,
+				672E6A751D325BA000328E96 /* fundo.png in Resources */,
 				D439F6C01D31B39F000F6722 /* Game.xcassets in Resources */,
 				672E6A6B1D31EBB500328E96 /* bola.png in Resources */,
 			);

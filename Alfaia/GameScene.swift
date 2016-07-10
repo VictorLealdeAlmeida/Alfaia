@@ -42,11 +42,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label = childNodeWithName("labelSKS") as! SKLabelNode
         label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
        
-        createCircle()
+        self.createCircle()
+//        self.createBaquetas()
 //        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(createNote),SKAction.waitForDuration(0.8)])))
         
         self.trackManager = TrackManager(level: SongLevel.LevelOne)
-        self.getPattern()
+//        self.getPattern()
         
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bump))
         view.addGestureRecognizer(tap)
@@ -61,6 +62,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.startMonitoringMotion(controller)
         }
 
+    }
+    
+    func createBaquetas() {
+        let left = SKSpriteNode(imageNamed: "circ")
+        left.xScale = 0.00003*size.width
+        left.yScale = 0.00003*size.width
+        left.position = CGPoint(x: 0, y: 0)
+        left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width, height: left.frame.height), center: CGPointMake(left.frame.height/2, 0))
+        note.physicsBody?.categoryBitMask = PhysicsCategories.None
+        note.physicsBody?.contactTestBitMask = PhysicsCategories.None
+        note.zPosition = 1000
+        addChild(left)
+        
+//        let right = SKNode(fileNamed: "baqueta")
     }
     
     func getPattern() {
