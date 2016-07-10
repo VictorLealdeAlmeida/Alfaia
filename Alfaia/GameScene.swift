@@ -20,6 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var note = SKSpriteNode(imageNamed: "")
     var noteActual = SKSpriteNode(imageNamed: "")
     var label = SKLabelNode()
+    var score = 0
 
     
     override func didMoveToView(view: SKView) {
@@ -46,12 +47,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         note.physicsBody?.categoryBitMask = PhysicsCategories.Note
         note.physicsBody?.collisionBitMask = PhysicsCategories.None
         note.physicsBody?.contactTestBitMask = PhysicsCategories.Circle
-        label.text = "--"
+        label.text = ""
         
         //Transiçao
         let actionMove = SKAction.moveToX(size.width + note.size.width, duration: 3)
         let actionMoveDone = SKAction.removeFromParent()
         note.runAction(SKAction.sequence([actionMove, actionMoveDone]))
+        print(score)
         
         addChild(note)
     }
@@ -121,11 +123,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if selected{
             //Transiçao
             note.removeAllActions()
-            let actionMove = SKAction.fadeAlphaTo(0, duration: 0.2)
+            let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Acertou"
+            score = score + 10
             selected = false
         }else{
+            let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
+            note.runAction(SKAction.sequence([actionMove]))
             label.text = "Errou"
         }
         
