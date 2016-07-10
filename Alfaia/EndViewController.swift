@@ -29,9 +29,9 @@ class EndViewController: UIViewController {
     
     func upLabelScore(){
         if (counter > 0){
-            self.points! += 1
+            self.points += 1
             counter -= 1
-            self.pointsLbl.text = String(self.points!)
+            self.pointsLbl.text = String(self.points)
         } else {
             timeScore!.invalidate()
         }

@@ -21,6 +21,8 @@ class GameViewController: UIViewController {
     var time = 0.0
     var timer = NSTimer()
     
+    var bgView: FLAnimatedImageView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,8 +44,8 @@ class GameViewController: UIViewController {
         
          // self.progView.transform = CGAffineTransformMakeRotation((CGFloat(M_PI/2)))
         
-        self.progView.setProgress(10, animated: true)
-    //    self.displayVideo()
+        self.progView.setProgress(1, animated: true)
+        self.displayVideo()
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector:#selector(GameViewController.setProgress), userInfo: nil, repeats: true)
     
@@ -62,27 +64,56 @@ class GameViewController: UIViewController {
     }
     
     func displayVideo() {
-        let urlImg: NSURL = NSBundle.mainBundle().URLForResource("nuanda", withExtension: "gif")!
-        let data: NSData = NSData(contentsOfURL: urlImg)!
-        
 //        let texture = SKTexture(data: data, size: self.frame.size)
 //        let background = SKSpriteNode(texture: texture)
 //        background.zPosition = -1000
 //        self.addChild(background)
         
-                let image = FLAnimatedImage(animatedGIFData: data)
-                image.frameCacheSizeMax = 20
-                let imageView = FLAnimatedImageView()
-                imageView.animatedImage = image
-                imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-                self.view.addSubview(imageView)
-                self.view.sendSubviewToBack(imageView)
+        for i in 0...5 {
+            let urlImg: NSURL = NSBundle.mainBundle().URLForResource("\(i)", withExtension: "gif")!
+            let data: NSData = NSData(contentsOfURL: urlImg)!
+            
+            let image = FLAnimatedImage(animatedGIFData: data)
+            image.frameCacheSizeMax = 20
+            let imageView = FLAnimatedImageView()
+            imageView.animatedImage = image
+            imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(10*i) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                if self.bgView == nil {
+                    self.view.addSubview(imageView)
+                    self.view.sendSubviewToBack(imageView)
+                }
+                self.bgView = imageView
+            }
+        }
+        
+        for i in 6...10 {
+            let urlImg: NSURL = NSBundle.mainBundle().URLForResource("\(i%6)", withExtension: "gif")!
+            let data: NSData = NSData(contentsOfURL: urlImg)!
+            
+            let image = FLAnimatedImage(animatedGIFData: data)
+            image.frameCacheSizeMax = 20
+            let imageView = FLAnimatedImageView()
+            imageView.animatedImage = image
+            imageView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(10*i) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                if self.bgView == nil {
+                    self.view.addSubview(imageView)
+                    self.view.sendSubviewToBack(imageView)
+                }
+                self.bgView = imageView
+            }
+        }
     }
     
     func setProgress() {
         time += 0.0018
-        progView.progress = Float(time)
-        if time >= 1 {
+        progView.progress = Float(time/94)
+        if time >= 94 {
             timer.invalidate()
         }
     }

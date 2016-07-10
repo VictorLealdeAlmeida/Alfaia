@@ -242,15 +242,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createNote(){
         let showNote = self.notesSequence.removeFirst()
         
-        let spriteName = showNote ? "bola" : "bola-cinza"
+        let spriteName = showNote ? "baque" : "vazio"
         if showNote {
 //            spriteName = "bola-cinza"
 //            return
         }
         note = SKSpriteNode(imageNamed: spriteName)
-        note.xScale = 0.00003*size.width
-        note.yScale = 0.00003*size.width
-        note.position = CGPoint(x: size.width + note.size.height, y: size.height * 0.3)
+        note.xScale = 0.0003*size.width
+        note.yScale = 0.0003*size.width
+        note.position = CGPoint(x: 0, y: size.height * 0.3)
         note.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
         if showNote {
             note.physicsBody?.categoryBitMask = PhysicsCategories.Note
@@ -265,7 +265,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.text = ""
         
         //Transiçao
-        let actionMove = SKAction.moveToX(0, duration: 3)
+        let actionMove = SKAction.moveToX(size.width + note.size.height, duration: 3)
         let actionMoveDone = SKAction.removeFromParent()
         note.runAction(SKAction.sequence([actionMove, actionMoveDone]))
         

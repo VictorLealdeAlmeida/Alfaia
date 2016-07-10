@@ -30,7 +30,7 @@ class TrackManager {
     init(level: SongLevel) {
         switch level {
         case .LevelOne:
-            self.songTime = 60
+            self.songTime = 93
             self.songStruct = [NotePattern.Baque1, NotePattern.Baque2, NotePattern.Baque2, NotePattern.Baque1, NotePattern.Baque2]
             self.gestureStruct = [NotePattern.Baque1, NotePattern.Baque2, NotePattern.Baque1, NotePattern.Baque2]
         default:
