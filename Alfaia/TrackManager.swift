@@ -31,8 +31,8 @@ class TrackManager {
         switch level {
         case .LevelOne:
             self.songTime = 60
-            self.songStruct = [NotePattern.Baque1, NotePattern.Baque1]
-            self.gestureStruct = [NotePattern.Baque1]
+            self.songStruct = [NotePattern.Baque1, NotePattern.Baque2, NotePattern.Baque2, NotePattern.Baque1, NotePattern.Baque2]
+            self.gestureStruct = [NotePattern.Baque1, NotePattern.Baque2, NotePattern.Baque1, NotePattern.Baque2]
         default:
             self.songTime = 60
             self.songStruct = [NotePattern.Baque1, NotePattern.Baque1]
@@ -47,6 +47,9 @@ class TrackManager {
         let pattern = self.songStruct.removeFirst()
         switch pattern {
         case .Baque1:
+            self.rightHandPattern = [true, false, true, true, true, true, false, true, false, true, false, true, true, false, true]
+            self.leftHandPattern = [true, false, true, true, true, true, false, true, false, true, false, true, true, false, true]
+        case .Baque2:
             self.rightHandPattern = [true, true, true, false, true, true, true]
             self.leftHandPattern = [true, true, false, false, true, true, false]
         default:
