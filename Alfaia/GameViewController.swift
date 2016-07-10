@@ -12,9 +12,13 @@ import SpriteKit
 class GameViewController: UIViewController {
 
     @IBOutlet weak var labelStore: UILabel!
-    var time = NSTimer()
+    @IBOutlet weak var progView: UIProgressView!
+    var timeScore = NSTimer()
     var counter = 0
     var score = 0
+    
+    var time = 0.0
+    var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +32,25 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             skView.presentScene(scene)
             skView.showsPhysics = true
+
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(GameViewController.updateScore),name: "mudouScore", object: nil)
-
+        
+         // self.progView.transform = CGAffineTransformMakeRotation((CGFloat(M_PI/2)))
+        
+        self.progView.setProgress(10, animated: true)
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector:#selector(GameViewController.setProgress), userInfo: nil, repeats: true)
+    
+    }
+    
+    func setProgress() {
+        time += 0.0018
+        progView.progress = Float(time)
+        if time >= 1 {
+            timer.invalidate()
+        }
     }
     
     func updateScore(notification: NSNotification) {
@@ -48,12 +67,7 @@ class GameViewController: UIViewController {
     
     //Fazer efeito legal na label do score
     func playLabelScore(){
-        time = NSTimer.scheduledTimerWithTimeInterval(0.005, target:self, selector: #selector(GameViewController.upLabelScore), userInfo: nil, repeats: true)
-    }
-    
-    func clearLabelScore(){
-        counter = 0
-        time.invalidate()
+        timeScore = NSTimer.scheduledTimerWithTimeInterval(0.005, target:self, selector: #selector(GameViewController.upLabelScore), userInfo: nil, repeats: true)
     }
     
     func upLabelScore(){
@@ -62,7 +76,7 @@ class GameViewController: UIViewController {
             counter -= 1
             self.labelStore.text = String(score)
         } else {
-            time.invalidate()
+            timeScore.invalidate()
         }
     }
 }
