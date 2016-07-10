@@ -18,7 +18,7 @@ struct PhysicsCategories{
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var note = SKSpriteNode(imageNamed: "")
-    var noteActual = SKSpriteNode(imageNamed: "")
+
     var label = SKLabelNode()
     var score = 0
 
