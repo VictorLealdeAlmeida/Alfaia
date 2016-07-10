@@ -20,7 +20,10 @@ struct PhysicsCategories{
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var note = SKSpriteNode(imageNamed: "")
+    var left = SKSpriteNode()
 
+    var timer = NSTimer()
+    
     var label = SKLabelNode()
     var score = 0
     
@@ -44,12 +47,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
         self.createCircle()
         self.createBaquetas()
-//        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(createNote),SKAction.waitForDuration(0.8)])))
+        
+       // timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:#selector(selectBump), userInfo: nil, repeats: true)
+        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(selectBump),SKAction.waitForDuration(1)])))
         
         self.trackManager = TrackManager(level: SongLevel.LevelOne)
-//        self.getPattern()
         
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bump))
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bumpUm))
         view.addGestureRecognizer(tap)
         
         NSNotificationCenter.defaultCenter().addObserver(
@@ -64,24 +68,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
+    var powerBump = 0
+    func bumpUm(){
+        powerBump = 1
+    }
+    
+    func selectBump(){
+        if powerBump == 0{
+            let actionMove = SKAction.rotateToAngle(0.25, duration: 0.25, shortestUnitArc: true)
+            let actionMoveTwo = SKAction.rotateToAngle(-0.25, duration: 0.25, shortestUnitArc: true)
+            left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
+        }else if powerBump == 1{
+            let actionMove = SKAction.rotateToAngle(0.6, duration: 0.25, shortestUnitArc: true)
+            let actionMoveTwo = SKAction.rotateToAngle(-0.25, duration: 0.25, shortestUnitArc: true)
+            left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
+            powerBump = 0
+        }
+    }
+    
     func createBaquetas() {
-        let left = SKSpriteNode(imageNamed: "baqueta")
+        left = SKSpriteNode(imageNamed: "baqueta")
         left.setScale(0.5)
         left.position = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.5)
-        left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 0))
+        left.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: left.frame.width/6, height: left.frame.height/2), center: CGPointMake(-left.frame.height * 4.2, 10))
         left.physicsBody?.categoryBitMask = PhysicsCategories.None
         left.physicsBody?.contactTestBitMask = PhysicsCategories.None
-        //left.centerRect =  CGRect(origin: CGPointMake(-left.frame.height * 20.5, 0),size: CGSize(width: 0,height: 0))
         left.anchorPoint = CGPoint(x:CGFloat(1),y:CGFloat(0))
         
-        //left.centerRect = CGRect(x: 30, y: 0, width: 2, height: 2)
-        
         addChild(left)
-        
-        //Transiçao
-        let actionMove = SKAction.rotateToAngle(0.7, duration: 0.5, shortestUnitArc: true)
-        let actionMoveTwo = SKAction.rotateToAngle(-0.7, duration: 0.5, shortestUnitArc: true)
-        left.runAction(SKAction.repeatActionForever(SKAction.sequence([actionMove, actionMoveTwo])))
         
 
     }
