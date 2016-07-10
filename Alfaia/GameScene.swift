@@ -51,6 +51,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVectorMake(0, 0)
         label = childNodeWithName("labelSKS") as! SKLabelNode
         label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.6)
+     //   let actionMove = SKAction.fadeAlphaTo(0, duration: 0.2)
+     //   label.runAction(SKAction.sequence([actionMove]))
+
+        
        
         self.createCircle()
         self.createBaquetas()
@@ -191,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // CHAMAR FUNÇÃO PRA TERMINAR FASE
         }
         self.notesSequence = newPattern["right"]!
-        let action = SKAction.repeatAction(SKAction.sequence([SKAction.runBlock(createNote), SKAction.waitForDuration(0.7)]), count: self.notesSequence.count)
+        let action = SKAction.repeatAction(SKAction.sequence([SKAction.runBlock(createNote), SKAction.waitForDuration(0.9)]), count: self.notesSequence.count)
         runAction(SKAction.sequence([action,SKAction.runBlock(terminou)]))
     }
     
