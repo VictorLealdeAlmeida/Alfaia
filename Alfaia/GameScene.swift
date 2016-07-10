@@ -139,7 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         note = SKSpriteNode(imageNamed: spriteName)
         note.xScale = 0.00003*size.width
         note.yScale = 0.00003*size.width
-        note.position = CGPoint(x: size.width * 0.0, y: size.height * 0.7)
+        note.position = CGPoint(x: size.width * 0.0, y: size.height * 0.3)
         note.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
         if showNote {
             note.physicsBody?.categoryBitMask = PhysicsCategories.Note
@@ -168,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let circle = SKSpriteNode(imageNamed: "circ")
         circle.xScale = 0.00035*size.width
         circle.yScale = 0.00035*size.width
-        circle.position = CGPoint(x: size.width * 0.5, y: size.height * 0.7)
+        circle.position = CGPoint(x: size.width * 0.5, y: size.height * 0.3)
         circle.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
         circle.physicsBody?.collisionBitMask = PhysicsCategories.None
