@@ -22,6 +22,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             scene.scaleMode = .AspectFill
             skView.presentScene(scene)
+            skView.showsPhysics = true
         }
     }
     

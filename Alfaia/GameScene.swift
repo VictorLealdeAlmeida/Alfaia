@@ -25,6 +25,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var lastTimeDetected: NSDate?
     
+    var notesGenerated: [SKNode] = []
+    
     override func didMoveToView(view: SKView) {
         
         NSNotificationCenter.defaultCenter().addObserver(
@@ -39,17 +41,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
        
         createCircle()
-        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(createNote),SKAction.waitForDuration(2)])))
+        runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(createNote),SKAction.waitForDuration(0.8)])))
         
-        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(batida))
+        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(bump))
         swipeRight.direction = .Right
         view.addGestureRecognizer(swipeRight)
     }
     
     func createNote(){
         note = SKSpriteNode(imageNamed: "bola")
-        note.xScale = 0.00005*size.width
-        note.yScale = 0.00005*size.width
+        note.xScale = 0.00003*size.width
+        note.yScale = 0.00003*size.width
         note.position = CGPoint(x: size.width * 0.0, y: size.height * 0.7)
         note.physicsBody = SKPhysicsBody(circleOfRadius: note.size.width/2)
         note.physicsBody?.categoryBitMask = PhysicsCategories.Note
@@ -64,6 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        print(score)
         
         addChild(note)
+        self.notesGenerated.append(note)
     }
     
     func createCircle(){
@@ -75,7 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         circle.physicsBody?.categoryBitMask = PhysicsCategories.Circle
         circle.physicsBody?.collisionBitMask = PhysicsCategories.None
         circle.physicsBody?.contactTestBitMask = PhysicsCategories.Note
-        addChild(circle)
+        self.addChild(circle)
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -111,7 +114,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyA;
         }
         
-        if(firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle){
+        if (firstBody.categoryBitMask == PhysicsCategories.Note && secondBody.categoryBitMask == PhysicsCategories.Circle) {
             noteDidCollideWithCircleEnd(firstBody.node as! SKSpriteNode, circle: secondBody.node as! SKSpriteNode)
         }
     }
@@ -123,9 +126,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func noteDidCollideWithCircleEnd(note:SKSpriteNode, circle:SKSpriteNode){
         selected = false
+        if self.notesGenerated.count <= 0 {
+            return
+        }
+        self.notesGenerated.removeFirst()
     }
     
-    func batida(){
+    func bump(){
+        if self.notesGenerated.count <= 0 {
+            return
+        }
+        let note = self.notesGenerated.removeFirst()
         if selected{
             //Transiçao
             note.removeAllActions()
@@ -166,7 +177,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.lastTimeDetected = currentTime
             print("Entrou")
             
-            self.batida()
+            self.bump()
             print("BUMP")
 //            print("x: \(xValue)     y: \(yValue)     z: \(zValue)     gravity: \(zGravity)")
             //            self.displayGestureLabel("Bump")
