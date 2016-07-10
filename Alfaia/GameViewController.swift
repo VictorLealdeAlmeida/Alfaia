@@ -37,7 +37,8 @@ class GameViewController: UIViewController {
             
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(GameViewController.updateScore),name: "mudouScore", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameViewController.updateScore),name: "mudouScore", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameViewController.endGame), name: "EndGame", object: nil)
         
          // self.progView.transform = CGAffineTransformMakeRotation((CGFloat(M_PI/2)))
         
@@ -46,6 +47,18 @@ class GameViewController: UIViewController {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector:#selector(GameViewController.setProgress), userInfo: nil, repeats: true)
     
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let vc = segue.destinationViewController as? EndViewController {
+            vc.counter = sender as! Int
+        }
+    }
+    
+    func endGame(notification: NSNotification) {
+        if let points = notification.userInfo!["points"] as? Int {
+            self.performSegueWithIdentifier("endSegue", sender: points)
+        }
     }
     
     func displayVideo() {

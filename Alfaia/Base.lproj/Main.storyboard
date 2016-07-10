@@ -6,6 +6,9 @@
     <customFonts key="customFonts">
         <mutableArray key="OriginalOlindaStyle.ttf">
             <string>OriginalOlindaStyle</string>
+            <string>OriginalOlindaStyle</string>
+            <string>OriginalOlindaStyle</string>
+            <string>OriginalOlindaStyle</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -103,11 +106,64 @@
                         <outlet property="labelStore" destination="XTk-yF-gD4" id="4xP-LK-0jT"/>
                         <outlet property="progView" destination="xgI-Xb-mJS" id="Lm1-8i-yso"/>
                         <outlet property="skView" destination="qSY-Un-ZcJ" id="5CC-ld-RiS"/>
+                        <segue destination="bEc-Lq-lbZ" kind="show" identifier="endSegue" id="9Cc-2d-sNu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dFW-Nd-Df7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="651" y="554"/>
+        </scene>
+        <!--End View Controller-->
+        <scene sceneID="RU1-MT-KK2">
+            <objects>
+                <viewController id="bEc-Lq-lbZ" customClass="EndViewController" customModule="Alfaia" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="063-Gq-3yl"/>
+                        <viewControllerLayoutGuide type="bottom" id="irh-GT-VuJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SMZ-7k-w8s">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fundo.png" translatesAutoresizingMaskIntoConstraints="NO" id="6Ml-l7-0iF">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fol-Jt-VGq">
+                                <rect key="frame" x="805" y="757" width="310" height="250"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" backgroundImage="restart.png"/>
+                                <connections>
+                                    <action selector="restart:" destination="bEc-Lq-lbZ" eventType="primaryActionTriggered" id="siY-X5-uOg"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CABOUSSE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFL-1f-iTt">
+                                <rect key="frame" x="234" y="111" width="1454" height="300"/>
+                                <fontDescription key="fontDescription" name="OriginalOlindaStyle" family="Original Olinda Style" pointSize="300"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="99999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PkF-WI-PfD">
+                                <rect key="frame" x="537" y="438" width="846" height="162"/>
+                                <fontDescription key="fontDescription" name="OriginalOlindaStyle" family="Original Olinda Style" pointSize="200"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vew-ZV-ezQ">
+                                <rect key="frame" x="681" y="587" width="558" height="101"/>
+                                <fontDescription key="fontDescription" name="OriginalOlindaStyle" family="Original Olinda Style" pointSize="100"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </view>
+                    <navigationItem key="navigationItem" id="3Ft-cJ-R2e"/>
+                    <connections>
+                        <outlet property="pointsLbl" destination="PkF-WI-PfD" id="aMr-5x-5Pi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VoZ-qo-vgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2685" y="554"/>
         </scene>
     </scenes>
     <resources>
@@ -116,5 +172,6 @@
         <image name="fundo.png" width="2580" height="1800"/>
         <image name="graveto-big.png" width="897" height="800"/>
         <image name="play.png" width="600" height="290"/>
+        <image name="restart.png" width="352" height="293"/>
     </resources>
 </document>

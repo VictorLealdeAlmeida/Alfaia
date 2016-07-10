@@ -166,7 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func getPattern() {
         guard let newPattern = trackManager.nextBumpPattern() else {
             return
-            // CHAMAR FUNÇÃO PRA TERMINAR FASE
+            NSNotificationCenter.defaultCenter().postNotificationName("EndGame", object: nil)
         }
         self.notesSequence = newPattern["right"]!
         let action = SKAction.repeatAction(SKAction.sequence([SKAction.runBlock(createNote), SKAction.waitForDuration(0.7)]), count: self.notesSequence.count)

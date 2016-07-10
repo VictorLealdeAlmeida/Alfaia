@@ -24,6 +24,8 @@
 		67C405471D32994D00E695B2 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C405441D32994D00E695B2 /* play.png */; };
 		67C4054C1D32A03600E695B2 /* baqueta-big.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C4054A1D32A03600E695B2 /* baqueta-big.png */; };
 		67C4054D1D32A03600E695B2 /* graveto-big.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C4054B1D32A03600E695B2 /* graveto-big.png */; };
+		67C4054F1D32C4B500E695B2 /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C4054E1D32C4B500E695B2 /* restart.png */; };
+		67C405511D32C67600E695B2 /* EndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C405501D32C67600E695B2 /* EndViewController.swift */; };
 		D439F6B81D31B39F000F6722 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6B71D31B39F000F6722 /* AppDelegate.swift */; };
 		D439F6BA1D31B39F000F6722 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D439F6B91D31B39F000F6722 /* GameScene.sks */; };
 		D439F6BC1D31B39F000F6722 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D439F6BB1D31B39F000F6722 /* GameScene.swift */; };
@@ -74,6 +76,8 @@
 		67C405441D32994D00E695B2 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		67C4054A1D32A03600E695B2 /* baqueta-big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baqueta-big.png"; sourceTree = "<group>"; };
 		67C4054B1D32A03600E695B2 /* graveto-big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graveto-big.png"; sourceTree = "<group>"; };
+		67C4054E1D32C4B500E695B2 /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
+		67C405501D32C67600E695B2 /* EndViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndViewController.swift; sourceTree = "<group>"; };
 		D439F6B41D31B39F000F6722 /* Alfaia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alfaia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D439F6B71D31B39F000F6722 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D439F6B91D31B39F000F6722 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 			children = (
 				67C405411D32970A00E695B2 /* OriginalOlindaStyle.ttf */,
 				67C4053F1D328FC100E695B2 /* luanda.mp3 */,
+				67C4054E1D32C4B500E695B2 /* restart.png */,
 				67C4054A1D32A03600E695B2 /* baqueta-big.png */,
 				67C4054B1D32A03600E695B2 /* graveto-big.png */,
 				67C405441D32994D00E695B2 /* play.png */,
@@ -176,6 +181,7 @@
 				D439F6B71D31B39F000F6722 /* AppDelegate.swift */,
 				D439F6B91D31B39F000F6722 /* GameScene.sks */,
 				D439F6C11D31B39F000F6722 /* Main.storyboard */,
+				67C405501D32C67600E695B2 /* EndViewController.swift */,
 				67C405371D327DAA00E695B2 /* Alfaia-Bridging-Header.h */,
 				D439F6BB1D31B39F000F6722 /* GameScene.swift */,
 				672E6A6C1D3214A100328E96 /* TrackManager.swift */,
@@ -324,6 +330,7 @@
 				672E6A731D32567300328E96 /* graveto.png in Resources */,
 				672E6A751D325BA000328E96 /* fundo.png in Resources */,
 				67C405301D327CF900E695B2 /* Info.plist in Resources */,
+				67C4054F1D32C4B500E695B2 /* restart.png in Resources */,
 				67C405471D32994D00E695B2 /* play.png in Resources */,
 				D439F6C01D31B39F000F6722 /* Game.xcassets in Resources */,
 				67C4053E1D328C2E00E695B2 /* nuanda.gif in Resources */,
@@ -352,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67C405511D32C67600E695B2 /* EndViewController.swift in Sources */,
 				D439F6BC1D31B39F000F6722 /* GameScene.swift in Sources */,
 				672E6A6D1D3214A200328E96 /* TrackManager.swift in Sources */,
 				67C4052E1D327CF900E695B2 /* FLAnimatedImage.m in Sources */,
