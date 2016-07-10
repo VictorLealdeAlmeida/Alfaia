@@ -36,6 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(batida))
         swipeRight.direction = .Right
         view.addGestureRecognizer(swipeRight)
+
     }
     
     func createNote(){
@@ -110,12 +111,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var selected = false
     func noteDidCollideWithCircle(note:SKSpriteNode, circle:SKSpriteNode){
-        print("Entrou")
         selected = true
     }
     
     func noteDidCollideWithCircleEnd(note:SKSpriteNode, circle:SKSpriteNode){
-        print("Saiu")
         selected = false
     }
     
@@ -127,8 +126,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Acertou"
             score = score + 10
+            NSNotificationCenter.defaultCenter().postNotificationName("mudouScore", object: nil, userInfo: ["score": score])
             selected = false
         }else{
+            note.removeAllActions()
             let actionMove = SKAction.fadeAlphaTo(0, duration: 0.25)
             note.runAction(SKAction.sequence([actionMove]))
             label.text = "Errou"
